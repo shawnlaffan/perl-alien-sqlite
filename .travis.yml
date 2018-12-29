@@ -1,0 +1,70 @@
+language: perl
+perl:
+  - "5.26"
+#  - "5.22"
+
+os:
+  - linux
+  - osx
+
+
+sudo: required 
+
+branches:
+  except:
+  - /appveyor/
+
+cache:
+  directories:
+    - ${HOME}/perl_modules
+    - ${HOME}/.alienbuild/plugin_fetch_cache
+    - ${HOME}/Library/Caches/Homebrew
+    #- /usr/local
+
+before_install:
+    # Skip build if the commit message contains [skip travis] or [travis skip]
+    #  (from https://github.com/htgoebel/pyinstaller/blob/develop/.travis.yml)
+  - >
+      echo "$TRAVIS_COMMIT_MESSAGE"
+      | grep -E  '\[(skip travis|travis skip)\]'
+      && echo "[skip travis] has been found, exiting."
+      && exit 0 || true
+
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew ls --versions perl > /dev/null || brew install perl; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated perl || brew upgrade perl; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew ls --versions cpanminus > /dev/null || brew install cpanminus; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew outdated cpanminus || brew upgrade cpanminus; fi;
+
+#  make sure we get the brewed perl and cpanm etc
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export PATH=/usr/local/bin:${PATH}; fi;
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then /usr/local/bin/cpanm --version; fi;
+
+#  local::lib target is cached
+  - cpanm --notest local::lib
+  - eval "$(perl -Mlocal::lib=${HOME}/perl_modules)"
+  
+  #  get latest Alien::Build
+  - cpanm --quiet --notest Alien::Build
+  #  Alien::Build::MM sometimes goes missing
+  - cpanm --quiet --notest Alien::Build::MM
+  - cpanm --quiet --notest Sort::Versions
+  - cpanm --quiet --notest PkgConfig
+  - cpanm --quiet --notest File::Find::Rule
+  #- cpanm --quiet --notest Alien::Build::Plugin::Build::MSYS
+  - cpanm --quiet --notest HTML::LinkExtor
+
+  - cpanm --quiet --notest Alien::Build::Plugin::Cleanse::BuildDir
+  - cpanm --quiet --notest Alien::Build::Plugin::Fetch::Cache
+  
+  - export quiet='--verbose'
+  - cpanm ${quiet} --notest --installdeps .
+  
+
+script:
+  - export ALIEN_BUILD_PRELOAD=Fetch::Cache
+  - perl Makefile.PL
+  - make
+  - make test
+  
+  #- echo Dumping alien.json file
+  #- cat `find blib -name alien.json -print`

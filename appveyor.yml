@@ -1,0 +1,34 @@
+branches:
+  except:
+    - /travis/
+skip_tags: true
+
+cache:
+  - C:\strawberry
+  - .alienbuild\plugin_fetch_cache
+
+install:
+  - if not exist "C:\strawberry" choco install strawberryperl --version 5.26.1.1
+  - set ST=C:\strawberry
+  - set PATH=%ST%\perl\bin;%ST%\perl\site\bin;%ST%\c\bin;%PATH%
+  - cd C:\projects\%APPVEYOR_PROJECT_NAME%
+  #  ensure we have some packages that aren't picked up by the install system
+  #  or that need updating
+  - cpanm --quiet --notest Alien::Build
+  - cpanm --quiet --notest Alien::Build::MM
+  - cpanm --quiet --notest Sort::Versions
+  - cpanm --quiet --notest PkgConfig
+  - cpanm --quiet Alien::Build::Plugin::Cleanse::BuildDir
+  - cpanm --quiet --notest --installdeps .
+  - cpanm --quiet --notest Alien::Build::Plugin::Fetch::Cache
+
+  - gcc -v
+
+build_script:
+  - set ALIEN_BUILD_PRELOAD=Fetch::Cache
+  - perl Makefile.PL
+
+  - gmake
+  - gmake test
+
+
