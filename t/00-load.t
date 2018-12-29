@@ -4,15 +4,15 @@ use Test::More;
 use Test::Alien;
 
 BEGIN {
-    use_ok('Alien::spatialite') or BAIL_OUT('Failed to load Alien::spatialite');
+    use_ok('Alien::sqlite') or BAIL_OUT('Failed to load Alien::sqlite');
 }
 
-alien_ok 'Alien::spatialite';
+alien_ok 'Alien::sqlite';
 
 diag(
     sprintf(
-        'Testing Alien::spatialite %s, Perl %s, %s',
-        $Alien::spatialite::VERSION, $], $^X
+        'Testing Alien::sqlite %s, Perl %s, %s',
+        $Alien::sqlite::VERSION, $], $^X
     )
 );
 

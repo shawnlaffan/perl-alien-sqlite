@@ -1,12 +1,12 @@
 use strict;
 use warnings;
 use Test::More;
-use Alien::spatialite;
+use Alien::sqlite;
 
-diag( 'NAME=' . Alien::spatialite->config('name') );
-diag( 'VERSION=' . Alien::spatialite->config('version') );
+diag( 'NAME=' . Alien::sqlite->config('name') );
+diag( 'VERSION=' . Alien::sqlite->config('version') );
 
-my $alien = Alien::spatialite->new;
+my $alien = Alien::sqlite->new;
 
 diag 'CFLAGS: ' . $alien->cflags;
 

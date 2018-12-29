@@ -3,24 +3,24 @@ use warnings;
 use Test::More;
 #use Config;
 use Test::Alien;
-use Alien::spatialite;
+use Alien::sqlite;
 
-alien_ok 'Alien::spatialite';
+alien_ok 'Alien::sqlite';
 
 #  nasty hack
-$ENV{LD_LIBRARY_PATH}   = Alien::spatialite->dist_dir . '/lib';
-$ENV{DYLD_LIBRARY_PATH} = Alien::spatialite->dist_dir . '/lib';
+$ENV{LD_LIBRARY_PATH}   = Alien::sqlite->dist_dir . '/lib';
+$ENV{DYLD_LIBRARY_PATH} = Alien::sqlite->dist_dir . '/lib';
 
 
-diag ('libs: '   . Alien::spatialite->libs);
-diag ('cflags: ' . Alien::spatialite->cflags);
+diag ('libs: '   . Alien::sqlite->libs);
+diag ('cflags: ' . Alien::sqlite->cflags);
 eval {
-    diag ('Dynamic libs: ' . join ':', Alien::spatialite->dynamic_libs);
+    diag ('Dynamic libs: ' . join ':', Alien::sqlite->dynamic_libs);
 };
 warn $@ if $@;
 
-diag ('bin dir: ' . join (' ', Alien::spatialite->bin_dir));
-my @bin = Alien::spatialite->bin_dir;
+diag ('bin dir: ' . join (' ', Alien::sqlite->bin_dir));
+my @bin = Alien::sqlite->bin_dir;
 warn "no proj bin dir found via bin_dir method\n" if not @bin;
 
 TODO: {
