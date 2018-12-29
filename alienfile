@@ -19,10 +19,10 @@ my $base_dir = getcwd();
 
 
 
-my $min_target_version = '4.3.0';
+my $min_target_version = '3.26.0';
 
 plugin 'PkgConfig' => (
-    pkg_name => 'spatialite',
+    pkg_name => 'sqlite3',
     minimum_version => $min_target_version,
 );
 
@@ -32,15 +32,14 @@ share {
   my $with_local = '';
   my $with_cpp11 = '';
 
-  start_url 'http://www.gaia-gis.it/gaia-sins/libspatialite-sources/';
-  #start_url "file://$base_dir";  #  debug
+  #  need to work out how to get latest
+  start_url 'https://www.sqlite.org/2018/sqlite-autoconf-3260000.tar.gz';
   plugin Download => (
-    filter  => qr/^libspatialite-([0-9\.]+[a-z]?)\.tar\.gz$/,
-    version => qr/^libspatialite-([0-9\.]+[a-z]?)\.tar\.gz$/,
+    version => '3.26.0',
   );
-
+  
   my $lib_version = get_lib_version() // 'not yet defined';
-  say "Downloaded spatialite version is $lib_version";
+  say "Downloaded version is $lib_version";
   
   plugin Extract => (format => 'tar.gz');
 
