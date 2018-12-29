@@ -15,10 +15,10 @@ my %common_reqs = (
 );
 
 my %WriteMakefileArgs = (
-    "ABSTRACT" => "Alien package for the Spatialite library",
+    "ABSTRACT" => "Alien package for the Sqlite library",
     "AUTHOR"   => 'Shawn Laffan <shawnlaffan@gmail.com>',
-    "NAME"     => "Alien::spatialite",
-    "VERSION_FROM" => "lib/Alien/spatialite.pm",
+    "NAME"     => "Alien::sqlite",
+    "VERSION_FROM" => "lib/Alien/sqlite.pm",
     "CONFIGURE_REQUIRES" => {
         %common_reqs,
         "PkgConfig"  => 0,
@@ -40,14 +40,14 @@ my %WriteMakefileArgs = (
         resources => {
             repository => {
                 type => 'git',
-                url  => 'https://github.com/shawnlaffan/perl-alien-spatialite',
+                url  => 'https://github.com/shawnlaffan/perl-alien-sqlite',
             },
             bugtracker => {
-                web => 'https://github.com/shawnlaffan/perl-alien-spatialite/issues/',
+                web => 'https://github.com/shawnlaffan/perl-alien-sqlite/issues/',
             },
         },
     },
-    "DISTNAME" => "Alien-spatialite",
+    "DISTNAME" => "Alien-sqlite",
     "LICENSE"  => "perl",
 );
 
