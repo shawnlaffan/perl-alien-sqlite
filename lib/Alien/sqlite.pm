@@ -22,7 +22,7 @@ Alien::sqlite - Compile the Sqlite library
 <p>
     <img src="https://img.shields.io/badge/perl-5.10+-blue.svg" alt="Requires Perl 5.10+" />
     <a href="https://travis-ci.org/shawnlaffan/perl-alien-sqlite"><img src="https://travis-ci.org/shawnlaffan/perl-alien-sqlite.svg?branch=master" /></a>
-    <a href="https://ci.appveyor.com/project/shawnlaffan/perl-alien-sqlite"><img src="https://ci.appveyor.com/api/projects/status/3lv9qu9ea2ex3p5d?svg=true" /></a>
+    <a href="https://ci.appveyor.com/project/shawnlaffan/perl-alien-sqlite"><img src="https://ci.appveyor.com/api/projects/status/weou0nr12huxqa72?svg=true" /></a>
 </p>
 
 =end HTML
