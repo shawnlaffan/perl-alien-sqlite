@@ -91,11 +91,11 @@ share {
   
   #  remove any git utils from the path
   #say join ' ', @PATH;
-  my $have_git_in_path = grep {$_ =~ m|Git[/\\]usr[/\\]bin(;?)|} @PATH;
-  if ($have_git_in_path) {
+  my $have_git_in_path = grep {$_ =~ m|Git[/\\]usr[/\\]bin|} @PATH;
+  if ($on_windows && $have_git_in_path) {
     warn 'Found Git/usr/bin in path and removed it for compilation';
     #say $ENV{PATH};
-    @PATH = grep {not $_ =~ m|Git[/\\]usr[/\\]bin(;?)$|} @PATH;
+    @PATH = grep {not $_ =~ m|Git[/\\]usr[/\\]bin$|} @PATH;
     #say $ENV{PATH};
   }
 
