@@ -94,9 +94,9 @@ jobs:
           perl Makefile.PL
           gmake
           gmake test
-          $sqpath = perl -Mblib -MAlien::sqlite -E"print Alien::sqlite->bin_dir"
+          $sqpath = perl -Mblib -E"use Alien::sqlite; print Alien::sqlite->bin_dir"
           $env:PATH="$sqpath;$env:PATH"
-          $sql3_exe = perl -Mblib -MAlien::sqlite -E"print Alien::sqlite->bin_dir . '/sqlite3.exe'"
+          $sql3_exe = perl -Mblib -E"use Alien::sqlite; print Alien::sqlite->bin_dir . '/sqlite3.exe'"
           & $sql3_exe -version
 
 
