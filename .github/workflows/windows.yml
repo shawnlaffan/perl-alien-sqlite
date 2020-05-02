@@ -36,7 +36,7 @@ jobs:
       - name: Prepare for CPAN cache
         run: |
           perl -V > perlversion.txt
-          #echo 'redo sqlite' >> perlversion.txt
+          echo 'file which' >> perlversion.txt
           dir perlversion.txt
 
       - name: Cache CPAN modules

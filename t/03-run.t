@@ -38,7 +38,7 @@ done_testing();
 sub objdump {
    my ($dll) = @_;
    
-   my $have_fw = require 'File::Which';
+   my $have_fw = eval 'require File::Which';
    return if !$have_fw;
    
    my $objdump = File::Which::which 'objdump';
