@@ -27,6 +27,7 @@ elsif ($? & 127) {
 }
 else {
     diag sprintf "$sqlite3_exe exited with value %d\n", $? >> 8;
+    objdump($sqlite3_exe);
 }
 diag 'sqlite3 -version: ' . $version // '';
 
