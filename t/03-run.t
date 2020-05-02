@@ -43,7 +43,7 @@ sub objdump {
    
    my $objdump = File::Which::which 'objdump';
    my @contents = `$objdump -p $dll`;
-   my @lines = grep {'DLL Name'} @contents;
+   my @lines = grep {/DLL Name/} @contents;
    diag join ' ', @lines;
    return;
 }
