@@ -4,7 +4,7 @@ use Test::More;
 #use Config;
 use Test::Alien;
 use Alien::sqlite;
-use Env qw ( PATH LD_LIBRARY_PATH DYLD_LIBRARY_PATH );
+use Env qw ( @PATH @LD_LIBRARY_PATH @DYLD_LIBRARY_PATH );
 
 alien_ok 'Alien::sqlite';
 
@@ -17,6 +17,7 @@ unshift @DYLD_LIBRARY_PATH, Alien::sqlite->dist_dir . '/lib';
 unshift @PATH, @bin;
 
 my $version = `sqlite3.exe -version`;
+diag 'sqlite3 -version: ' . $version // '';
 ok (defined $version, 'got a defined version');
 
 done_testing();
