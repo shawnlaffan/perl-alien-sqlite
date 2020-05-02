@@ -95,6 +95,12 @@ jobs:
           gmake
           gmake test
 
+      - name: Run sqlite binary
+        if: ${{ always() }}
+        run: |
+          $sql3_exe = perl -MAlien::sqlite -E"print Alien::sqlite->bin_dir . '/sqlite3.exe'"
+          & $sql3_exe -version
+
       - name: Zip dirs for upload
         if: ${{ always() }}
         run: |
