@@ -16,24 +16,28 @@ unshift @LD_LIBRARY_PATH, Alien::sqlite->dist_dir . '/lib';
 unshift @DYLD_LIBRARY_PATH, Alien::sqlite->dist_dir . '/lib';
 unshift @PATH, @bin;
 
-my $sqlite3_exe = "$bin[0]/sqlite3.exe";
+my $sqlite3_exe = "$bin[0]/sqlite3";
 my $version = qx ( $sqlite3_exe -version );
-if ($? == -1) {
+my $e = $?;
+if ($e == -1) {
     diag "failed to execute: $!\n";
 }
-elsif ($? & 127) {
+elsif ($e & 127) {
     diag sprintf "child died with signal %d, %s coredump\n",
         ($? & 127),  ($? & 128) ? 'with' : 'without';
 }
 else {
     diag sprintf "$sqlite3_exe exited with value %d\n", $? >> 8;
-    objdump($sqlite3_exe);
-    diag "===";
-    objdump("$bin[0]/libsqlite3-0.dll");
+    if ($e) {
+      objdump($sqlite3_exe);
+      diag "===";
+      objdump("$bin[0]/libsqlite3-0.dll");
+    }
 }
 diag 'sqlite3 -version: ' . $version // '';
 
-ok (defined $version, 'got a defined version');
+#  need a better test
+ok (defined $version && length $version > 5, 'got a defined version');
 
 done_testing();
 
@@ -42,6 +46,7 @@ sub objdump {
    
    my $have_fw = eval 'require File::Which';
    return if !$have_fw;
+
    if (!-e $dll) {
       warn "$dll does not exist";
       return;
