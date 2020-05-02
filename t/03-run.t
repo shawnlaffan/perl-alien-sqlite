@@ -17,7 +17,18 @@ unshift @DYLD_LIBRARY_PATH, Alien::sqlite->dist_dir . '/lib';
 unshift @PATH, @bin;
 
 my $version = `sqlite3.exe -version`;
+if ($? == -1) {
+    diag "failed to execute: $!\n";
+}
+elsif ($? & 127) {
+    diag sprintf "child died with signal %d, %s coredump\n",
+        ($? & 127),  ($? & 128) ? 'with' : 'without';
+}
+else {
+    diag sprintf "sqlite3.exe exited with value %d\n", $? >> 8;
+}
 diag 'sqlite3 -version: ' . $version // '';
+
 ok (defined $version, 'got a defined version');
 
 done_testing();
