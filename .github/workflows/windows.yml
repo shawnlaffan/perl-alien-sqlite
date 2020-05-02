@@ -76,6 +76,7 @@ jobs:
           cpanm --quiet --notest File::Find::Rule
           cpanm --quiet --notest Alien::Build::Plugin::Fetch::Cache
           cpanm --quiet --notest Env::ShellWords
+          cpanm --quiet --notest File::Which
 
       - name: Install dependencies Alien::MSYS
         run: |

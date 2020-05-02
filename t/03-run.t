@@ -34,31 +34,15 @@ ok (defined $version, 'got a defined version');
 
 done_testing();
 
- 
-__DATA__
-
-//  A very simple test.  It really only tests that we can load proj4.
-
-#include "EXTERN.h"
-#include "perl.h"
-#include "XSUB.h"
-#include "stdio.h"
-#include <spatialite.h>
-
-int main()
-{
-   printf("Hello, World!");
-   return 0;
+sub objdump {
+   my ($dll) = @_;
+   
+   my $have_fw = require 'File::Which';
+   return if !$have_fw;
+   
+   my $objdump = File::Which::which 'objdump';
+   my @contents = `$objdump -p $dll`;
+   my @lines = grep {'DLL Name'} @contents;
+   diag join ' ', @lines;
+   return;
 }
-
-const char *
-version(const char *class)
-{
-   return "v1";
-}
-
-MODULE = TA_MODULE PACKAGE = TA_MODULE
- 
-const char *version(class);
-    const char *class;
-
