@@ -26,7 +26,7 @@ elsif ($? & 127) {
         ($? & 127),  ($? & 128) ? 'with' : 'without';
 }
 else {
-    diag sprintf "sqlite3.exe exited with value %d\n", $? >> 8;
+    diag sprintf "$sqlite3_exe exited with value %d\n", $? >> 8;
 }
 diag 'sqlite3 -version: ' . $version // '';
 
