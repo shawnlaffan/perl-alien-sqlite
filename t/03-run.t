@@ -28,6 +28,8 @@ elsif ($? & 127) {
 else {
     diag sprintf "$sqlite3_exe exited with value %d\n", $? >> 8;
     objdump($sqlite3_exe);
+    diag "===";
+    objdump("$bin[0]/libsqlite3-0.dll");
 }
 diag 'sqlite3 -version: ' . $version // '';
 
@@ -40,7 +42,10 @@ sub objdump {
    
    my $have_fw = eval 'require File::Which';
    return if !$have_fw;
-   
+   if (!-e $dll) {
+      warn "$dll does not exist";
+      return;
+   }
    my $objdump = File::Which::which 'objdump';
    my @contents = `$objdump -p $dll`;
    my @lines = grep {/DLL Name/} @contents;
