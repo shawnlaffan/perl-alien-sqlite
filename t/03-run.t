@@ -8,7 +8,7 @@ use Env qw ( @PATH @LD_LIBRARY_PATH @DYLD_LIBRARY_PATH );
 
 alien_ok 'Alien::sqlite';
 
-if (Alien::sqlite->install_type = 'share') {
+if (Alien::sqlite->install_type eq 'share') {
    diag ('bin dir: ' . join (' ', Alien::sqlite->bin_dir));
    my @bin = Alien::sqlite->bin_dir;
    
