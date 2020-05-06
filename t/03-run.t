@@ -8,36 +8,41 @@ use Env qw ( @PATH @LD_LIBRARY_PATH @DYLD_LIBRARY_PATH );
 
 alien_ok 'Alien::sqlite';
 
-diag ('bin dir: ' . join (' ', Alien::sqlite->bin_dir));
-my @bin = Alien::sqlite->bin_dir;
-
-#  nasty hack
-unshift @LD_LIBRARY_PATH, Alien::sqlite->dist_dir . '/lib';
-unshift @DYLD_LIBRARY_PATH, Alien::sqlite->dist_dir . '/lib';
-unshift @PATH, @bin;
-
-my $sqlite3_exe = "$bin[0]/sqlite3";
-my $version = qx ( $sqlite3_exe -version );
-my $e = $?;
-if ($e == -1) {
-    diag "failed to execute: $!\n";
-}
-elsif ($e & 127) {
-    diag sprintf "child died with signal %d, %s coredump\n",
-        ($? & 127),  ($? & 128) ? 'with' : 'without';
+if (Alien::sqlite->install_type = 'share') {
+   diag ('bin dir: ' . join (' ', Alien::sqlite->bin_dir));
+   my @bin = Alien::sqlite->bin_dir;
+   
+   #  nasty hack
+   unshift @LD_LIBRARY_PATH, Alien::sqlite->dist_dir . '/lib';
+   unshift @DYLD_LIBRARY_PATH, Alien::sqlite->dist_dir . '/lib';
+   unshift @PATH, @bin;
+   
+   my $sqlite3_exe = "$bin[0]/sqlite3";
+   my $version = qx ( $sqlite3_exe -version );
+   my $e = $?;
+   if ($e == -1) {
+       diag "failed to execute: $!\n";
+   }
+   elsif ($e & 127) {
+       diag sprintf "child died with signal %d, %s coredump\n",
+           ($? & 127),  ($? & 128) ? 'with' : 'without';
+   }
+   else {
+       diag sprintf "$sqlite3_exe exited with value %d\n", $? >> 8;
+       if ($e) {
+         objdump($sqlite3_exe);
+         diag "===";
+         objdump("$bin[0]/libsqlite3-0.dll");
+       }
+   }
+   diag 'sqlite3 -version: ' . $version // '';
+   
+   #  need a better test
+   ok (defined $version && length $version > 5, 'got a defined version');
 }
 else {
-    diag sprintf "$sqlite3_exe exited with value %d\n", $? >> 8;
-    if ($e) {
-      objdump($sqlite3_exe);
-      diag "===";
-      objdump("$bin[0]/libsqlite3-0.dll");
-    }
+   ok (1, 'no need to test sqlite3 binary for system install');
 }
-diag 'sqlite3 -version: ' . $version // '';
-
-#  need a better test
-ok (defined $version && length $version > 5, 'got a defined version');
 
 done_testing();
 
