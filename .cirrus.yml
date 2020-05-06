@@ -9,4 +9,3 @@ task:
     - perl Makefile.PL
       make
       make test
-  
