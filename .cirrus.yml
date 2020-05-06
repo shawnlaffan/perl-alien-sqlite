@@ -3,7 +3,7 @@ freebsd_instance:
 
 task:
   install_script:
-    - sudo pkg install -y p5-App-cpanminus git
+    - sudo pkg install -y p5-App-cpanminus
     - sudo cpanm --installdeps .
   script:
     - perl Makefile.PL
