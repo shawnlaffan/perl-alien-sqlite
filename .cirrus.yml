@@ -7,5 +7,5 @@ task:
     - sudo cpanm --installdeps Alien::sqlite
   script:
     - perl Makefile.PL
-      make
-      make test
+    - make
+    - make test
