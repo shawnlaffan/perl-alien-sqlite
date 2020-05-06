@@ -1,0 +1,12 @@
+freebsd_instance:
+  image: freebsd-12-1-release-amd64
+
+task:
+  install_script:
+    - sudo pkg install -y p5-App-cpanminus git
+    - sudo cpanm --installdeps .
+  script:
+    - perl Makefile.PL
+      make
+      make test
+  
