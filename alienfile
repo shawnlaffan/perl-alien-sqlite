@@ -100,7 +100,7 @@ share {
     plugin 'Cleanse::BuildDir';
   }
   
-  meta->around_hook ( build => \&remove_gitfw_from_path );
+  meta->around_hook( build => \&remove_gitfw_from_path );
 
   build [
     "%{configure} $with_local $with_cpp11 $build_static",
@@ -123,7 +123,7 @@ sub remove_gitfw_from_path {
   local $ENV{PATH} = $ENV{PATH};
 
 
-  if (grep {path($_)->subsumes ('/usr/bin')} @PATH) {
+  if (grep {path($_)->stringify =~ m|/usr/bin$|} @PATH) {
     @PATH
       = grep {!path($_)->parent->parent->child ('git-bash.exe')->exists}
         @PATH;
