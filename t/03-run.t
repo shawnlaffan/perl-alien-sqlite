@@ -8,7 +8,7 @@ use Env qw ( @PATH @LD_LIBRARY_PATH @DYLD_LIBRARY_PATH );
 
 alien_ok 'Alien::sqlite';
 
-if (Alien::sqlite->install_type eq 'share') {
+#if (Alien::sqlite->install_type eq 'share') {
    diag ('bin dir: ' . join (' ', Alien::sqlite->bin_dir));
    my @bin = Alien::sqlite->bin_dir;
    
@@ -39,10 +39,10 @@ if (Alien::sqlite->install_type eq 'share') {
    
    #  need a better test
    ok (defined $version && length $version > 5, 'got a defined version');
-}
-else {
-   ok (1, 'no need to test sqlite3 binary for system install');
-}
+#}
+#else {
+#   ok (1, 'no need to test sqlite3 binary for system install');
+#}
 
 done_testing();
 
