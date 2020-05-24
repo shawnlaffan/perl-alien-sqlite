@@ -31,9 +31,9 @@ plugin 'PkgConfig' => (
 );
 
 plugin 'Probe::CommandLine' => (
-  command => 'sqlite3',
-  args    => [ '--version' ],
-  match   => qr/\d+\.\d+\.\d+ \d{4}-\d{2}-\d{2}/,
+  command  => 'sqlite3',
+  #args    => [ '--version' ],
+  #match   => qr/\d+\.\d+\.\d+ \d{4}-\d{2}-\d{2}/,
   #version => qr/gzip ([0-9\.]+)/,
   secondary => 1,  #  secondary to pkgconf probe
 );
