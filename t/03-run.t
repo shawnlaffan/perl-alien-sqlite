@@ -17,7 +17,7 @@ alien_ok 'Alien::sqlite';
    unshift @DYLD_LIBRARY_PATH, Alien::sqlite->dist_dir . '/lib';
    unshift @PATH, @bin;
    
-   my $sqlite3_exe = "$bin[0]/sqlite3";
+   my $sqlite3_exe = @bin ? "$bin[0]/sqlite3" : 'sqlite3';
    my $version = qx ( $sqlite3_exe -version );
    my $e = $?;
    if ($e == -1) {
