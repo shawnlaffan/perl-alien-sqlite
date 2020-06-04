@@ -53,11 +53,11 @@ my %WriteMakefileArgs = (
 
 use Alien::Build::MM;
 my $abmm = Alien::Build::MM->new (
-  clean_install => 1,
+  #clean_install => 1,
 );
-sub MY::install {
-  $abmm->mm_install(@_);
-}
+#sub MY::install {
+#  $abmm->mm_install(@_);
+#}
 
 %WriteMakefileArgs = $abmm->mm_args(%WriteMakefileArgs);
 
