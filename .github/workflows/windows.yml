@@ -50,7 +50,7 @@ jobs:
       - name: Prepare for Alien cache
         run: |
           perl -V > aliencache.txt
-          echo 'aliens' >> aliencache.txt
+          echo 'aliens 20200604' >> aliencache.txt
           dir aliencache.txt
 
       - name: Cache Alien downloads
