@@ -53,9 +53,9 @@ share {
   my $with_cpp11 = '';
 
   #  need to work out how to get latest without updating next lines
-  start_url 'https://www.sqlite.org/2020/sqlite-autoconf-3310100.tar.gz';
+  start_url 'https://www.sqlite.org/2022/sqlite-autoconf-3370200.tar.gz';
   plugin Download => (
-    version => '3.31.1',
+    version => '3.37.2',
   );
 
   
