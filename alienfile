@@ -109,6 +109,14 @@ share {
   }
   
   meta->around_hook( build => \&remove_gitfw_from_path );
+  meta->around_hook(
+    build => sub {
+      my ($orig, $build, @args) = @_;
+      $build->log("Setting CCACHE_BASEDIR to " . getcwd());
+      local $ENV{CCACHE_BASEDIR} = getcwd();
+      $orig->($build, @args);
+    }
+  );
 
   build [
     "%{configure} $with_local $with_cpp11 $build_static",
