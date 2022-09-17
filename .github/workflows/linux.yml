@@ -1,0 +1,60 @@
+name: linux_de_locale
+
+on:
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - '*'
+  pull_request:
+
+env:
+  PERL_MOD_DIR: /home/runner/perl5/lib/perl5
+
+jobs:
+  perl:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: '5.36'
+
+      - name: perl -V
+        run: perl -V
+
+      - name: Prepare for cache
+        run: |
+          perl -V > perlversion.txt
+          echo '20220918' >> perlversion.txt
+          ls -l perlversion.txt
+
+      - name: Cache CPAN modules
+        uses: actions/cache@v1
+        with:
+          path: ~/perl5
+          key: ${{ runner.os }}-build-${{ hashFiles('perlversion.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ hashFiles('perlversion.txt') }}
+
+      - name: Install Dynamic Dependencies
+        run: |
+          which -a cpanm
+          which -a perl
+          cpanm --notest local::lib
+          echo $(perl -Mlocal::lib=${HOME}/perl5)
+          eval "$(perl -Mlocal::lib=${HOME}/perl5)"
+          cpanm --notest Alien::Build
+          cpanm --installdeps .
+          
+      - name: Run Tests
+        run: |
+          echo $(perl -Mlocal::lib=${HOME}/perl5)
+          eval "$(perl -Mlocal::lib=${HOME}/perl5)"
+          perl Makefile.PL
+          cpanm --installdeps .
+          make
+          make test
