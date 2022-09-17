@@ -146,6 +146,7 @@ sub remove_gitfw_from_path {
 
   @PATH
     = grep {path($_)->stringify =~ m|/usr/bin$| && path($_) ne $msys_path ? () : $_}
+      grep {defined $_}  #  undef paths cause issues with Path::Tiny 
       @PATH;
 
   my $removed = $count - @PATH;
