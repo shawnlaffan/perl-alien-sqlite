@@ -1,4 +1,4 @@
-name: linux_de_locale
+name: linux
 
 on:
   push:
