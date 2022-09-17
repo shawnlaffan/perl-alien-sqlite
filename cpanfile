@@ -12,3 +12,4 @@ requires 'FFI::CheckLib';
 requires 'Path::Tiny';
 requires 'Capture::Tiny';
 requires 'PkgConfig';
+requires "Mojo::DOM58";
