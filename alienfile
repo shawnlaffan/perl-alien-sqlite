@@ -86,7 +86,9 @@ share {
     #  but not sure if /usr/local is needed yet
     plugin 'Build::Make' => 'gmake';
   }
-  plugin 'Build::Make' => 'gmake';
+  elsif ($on_windows) {
+    plugin 'Build::Make' => 'gmake';
+  }
 
   my $make_cmd = '%{make}';
   my $make_inst_cmd = '%{make} install';
