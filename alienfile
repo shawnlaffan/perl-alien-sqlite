@@ -128,6 +128,7 @@ share {
         local $ENV{DESTDIR} = "$ENV{DESTDIR}/" 
           if not $ENV{DESTDIR} =~ m{/$};
         $build->install_prop->{prefix} = '.';
+        local $ENV{CFLAGS} .= ' -D_WIN32_WINNT=0x0600';  #  for older Strawberry toolchains
         $orig->($build, @args);
       }
     );
