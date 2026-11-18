@@ -20,6 +20,7 @@ install:
   - cpanm --quiet --notest Sort::Versions
   - cpanm --quiet --notest PkgConfig
   - cpanm --quiet Alien::Build::Plugin::Cleanse::BuildDir
+  - cpanm --quiet Alien::MSYS
   - cpanm --quiet --notest --installdeps .
 
   - gcc -v
